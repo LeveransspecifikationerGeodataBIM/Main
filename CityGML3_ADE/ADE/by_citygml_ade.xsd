@@ -1,0 +1,1901 @@
+<?xml version="1.0" encoding="UTF-8"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:bldg="http://www.opengis.net/citygml/building/3.0" xmlns:byade="by_citygml_ade" xmlns:con="http://www.opengis.net/citygml/construction/3.0" xmlns:core="http://www.opengis.net/citygml/3.0" xmlns:gml="http://www.opengis.net/gml/3.2" elementFormDefault="qualified" targetNamespace="by_citygml_ade" version="0.1">
+  <annotation>
+    <documentation>-- Name --
+BY_ADE
+
+-- Definition --
+Building extension of CityGML 3.0</documentation>
+  </annotation>
+	<import namespace="http://www.opengis.net/citygml/3.0" schemaLocation="file:/C:/xsd/CityGML-3/core/cityGMLBase.xsd"/>
+	<import namespace="http://www.opengis.net/citygml/building/3.0" schemaLocation="file:/C:/xsd/CityGML-3/bldg/building.xsd"/>
+	<import namespace="http://www.opengis.net/citygml/construction/3.0" schemaLocation="file:/C:/xsd/CityGML-3/const/construction.xsd"/>
+  <import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+  <!--XML Schema document created by ShapeChange - http://shapechange.net/-->
+  <simpleType name="BY_AnsvarigBeslutsfattareType">
+    <union memberTypes="byade:BY_AnsvarigBeslutsfattareEnumerationType byade:BY_AnsvarigBeslutsfattareOtherType"/>
+  </simpleType>
+  <simpleType name="BY_AnsvarigBeslutsfattareEnumerationType">
+    <restriction base="string">
+      <enumeration value="länsstyrelse">
+        <annotation>
+          <documentation>-- Definition --
+under uppförande
+
+-- Beskrivning --
+Godkänt bygglov finns, byggnaden planeras att uppföras i närtid eller på längre sikt.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="Sjöfartsverket"/>
+      <enumeration value="Naturvårdsverket">
+        <annotation>
+          <documentation>-- Definition --
+inte längre gällande/levande.
+
+-- Beskrivning --
+Byggnaden har t.ex. rivits eller brunnit ned.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="annan namngivare"/>
+      <enumeration value="Lantmäteriet"/>
+      <enumeration value="Trafikverket"/>
+      <enumeration value="kommun"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_AnsvarigBeslutsfattareOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_ByggnadAndamalDetaljType">
+    <union memberTypes="byade:BY_ByggnadAndamalDetaljEnumerationType byade:BY_ByggnadAndamalDetaljOtherType"/>
+  </simpleType>
+  <simpleType name="BY_ByggnadAndamalDetaljEnumerationType">
+    <restriction base="string">
+      <enumeration value="småhus friliggande">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som inte är sammanbyggd med annat småhus och är inrättad som bostad för en eller två hushåll.
+&lt;i&gt;Källa: SGP Byggnad + SIS-TS 637010:2014&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="småhus kedjehus">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Två eller flera byggnader, som är sammanbyggda via garage, förråd eller liknande, och är inrättad som bostad för en eller två hushåll. 
+&lt;i&gt;Källa: SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="småhus radhus">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad inrättad till bostäder åt minst tre hushåll vars bostadsdelar är direkt sammanbyggda med varandra i en rad. 
+&lt;i&gt;Källa: Terminologicentrum TNC, Plan- och byggtermer 1994 + SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="flerbostadshus">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad inrättad till bostäder åt minst tre hushåll. 
+&lt;i&gt;Källa: SIS-TS 637010:2014 + SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="småhus parhus">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad inrättad med två bostäder för en eller två hushåll och är sammanbyggda parvis i mellanliggande fastighetsgräns.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="specialbostad">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som används för Serviceboende, Äldreboende, Tillfälligt/temporärt boende (t.ex. för flyktingar), Studentboende med gemensamma utrymmen
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;
+&lt;i&gt;
+&lt;/i&gt;&lt;b&gt;Anm.&lt;/b&gt;&lt;b&gt; &lt;/b&gt;
+&lt;b&gt;Specialbostad för äldre eller funktionshindrade&lt;/b&gt;: En bostad som är varaktigt förbehållen äldre eller personer med funktionshinder och där boendet alltid är förenat med service, stöd och personlig omvårdnad. Dessa bostäder eller rum är vanligtvis grupperade kring gemensamhetsutrymmen såsom kök, matsal eller sällskapsrum. 
+
+&lt;b&gt;Övrig specialbostad&lt;/b&gt;: Är en annan specialbostad än för äldre eller funktionshindrade eller en studentbostad som är varaktigt förbehållen vissa väl avgränsade grupper. En sådan bostad är avsedd för temporärt boende och hyrs ut med reducerat besittningsskydd. Exempel är samlade bestånd av utslussningsbostäder för personer som nyss frigivits från kriminalvårdsanstalt samt elevhem och internat som inte räknas in i gruppen studentbostäder.
+&lt;i&gt;Källa: Lägenhetsregisterlagen&lt;/i&gt;&lt;i&gt; &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="energiproduktion">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som till övervägande del innehåller tillverkning/produktion av olika energikällor, t.ex. kärnkraftverk, vattenkraftverk, vindkraftverk, värmeverk, kondenskraftverk, gasturbin, sopförbränning.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tillverkning">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad för tillverkning, t.ex. livsmedel, textil/beklädnad, trävaror, sågverk, metall, maskin, kemisk
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ospecificerad">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Används när inget av de detaljerade ändamålen passar eller användningen är okänd.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="drivmedel">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad för försäljning av drivmedel (bensin, diesel, gasol, el)
+&lt;i&gt;Källa: SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="handel">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad där handel av olika typer bedrivs, t.ex. café, kiosk, affär
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="hotell">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+En byggnad som inrymmer möblerade, tillfälliga bostäder avsedda för yrkesmässig uthyrningsverksamhet, t.ex. hotell, pensionat.
+&lt;i&gt;Källa: Terminologicentrum TNC, Plan och Byggtermer 1994 &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="konferens">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som är anpassad för konferenser, möten och liknande arrangemang.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kontor">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som inrymmer lokaler avsedda för skrivbordsarbete och administration i företag och föreningar. 
+&lt;i&gt;Källa: SGP Byggnad + Wikipedia&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="parkeringshus">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad avsedd för parkering av ett stort antal fordon.
+&lt;i&gt;Källa: Terminologicentrum TNC Plan och Byggtermer 1994&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="restaurang">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som inrymmer lokal för beredning, tillagning och servering av livsmedel.
+&lt;i&gt;Källa: Terminologicentrum TNC Plan och Byggtermer 1994&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="logi">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som till övervägande del används för logi, t.ex. vandrarhem, campingstuga.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="lager">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad för förvaring av varor, produkter och material i avsikt att försäljas eller förbrukas.
+&lt;i&gt;Källa: Terminologicentrum TNC, Basord i våra fackspråk 2012 + SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="avfallshantering">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som till övervägande delen används för avfallshantering i större skala. Insamling, sortering, återvinning och distribution. 
+&lt;i&gt;Källa: Avfall Sverige &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="förvaltning">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som används för kommunal och statlig förvaltning, t.ex. domstol, tingsrätt, åklagare, landsting, administrativa byggnader, kriminalvårdsanstalt försvarsbyggnad.
+Anm: Ej kommunhus 
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="badhus">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad inrättad för inomhusbad, t.ex. simhall, äventyrsbad, kallbadhus.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="teknisk samhallsfunktion">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad i distributionsnätet för gas, värme, fjärrvärme, datatrafik, elektricitet eller vatten, t.ex. gasturbin, transformatorstation, nätstation, vattentorn, reningsverk, reningsanläggning, vattenverk, VA-anläggning, värmecentral, teknikbod (tele, bredband), pumpstation, panncentral
+&lt;i&gt;Källa: SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="flygterminal">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad vid flygplats för omlastning av gods eller på-, av- eller omstigning av passagerare.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="färjeterminal">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad vid hamn för på-, av eller omstigning av passagerare.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="förskola">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad inrättad för verksamhet som regelbundet tar emot barn upp till 7 år under begränsad del av dygnet.
+&lt;i&gt;Källa: Terminologicentrum TNC, Plan och Byggtermer 194&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="högskola">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som används som lärosäte för eftergymnasial utbildning/undervisning eller forskning klassificerad i högskoleförordning. 
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ishall">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad med inbyggd konstfrusen isanläggning, t.ex. för ishockey, bandy, skridskor, konståkning.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kommunhus">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad för kommunens administrativa ledning, t.ex. kommunhus, stadshus, rådhus.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kulturbyggnad">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som används för kulturellt ändamål som t.ex. teater, konserthus, museum, bibliotek eller hembygdsgård.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="multiarena">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+En flexibel, anpassningsbar större byggnad/arena/lokal för utövande av sport, kultur och genomförande av många olika slags arrangemang, t.ex. mässor, konserter.
+&lt;i&gt;Källa: SGP Byggnad + Wikipedia&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="polisstation">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad för polisverksamhet.
+&lt;i&gt;Källa: Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="resecentrum">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som används för samordning av trafik och service i och omkring t.ex. järnvägsstation och busstation med flera linjer och hållplatser.
+&lt;i&gt;Källa: SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ridhus">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad inrättad som ridhus eller för ridskola.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="räddningstjänst">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad för räddningstjänsten, t.ex. brandstation, ambulans
+&lt;i&gt;Källa: SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="samfund">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad för fast organiserad religiös gemenskap, t.ex. kyrka, frikyrka, moské, synagoga, tempel, kloster, församlingshem, krematorium, kapell eller gravkapell.
+&lt;i&gt;Källa: SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sjukhus">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som används som inrättning för sluten sjukvård och specialiserad öppenvård, t.ex. lasarett, länssjukhus, regionsjukhus.&lt;i&gt; &lt;/i&gt;
+&lt;i&gt;Källa: SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="skola">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad för undervisning, t.ex. grundskola, gymnasium, folk-, handels-, jakt-, jordbruk-, lanthushålls-, natur- och kultur-, naturbruks-, nomad-, räddnings-, skogsbruks-, verkstads-, vård-, samisk skola.
+&lt;i&gt;Källa: SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sporthall">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad inrättad för inomhusaktiviteter inom sport och idrott, t.ex. idrottshall, badmintonhall, curlinghall, tennishall, klättring, skateboard, boule.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="universitet">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som används för eftergymnasial utbildning/undervisning eller forskning klassificerad i högskoleförordning.
+&lt;i&gt;Källa: SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="vårdcentral">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som används som enhet för öppen hälso- och sjukvård, t.ex. hälsocentral, vårdcentral, läkarstation, vårdcentrum. Dock inte privatläkarmottagning.
+&lt;i&gt;Källa: SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="återvinningscentral">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Bemannad större anläggning med byggnader för grovavfall, trädgårdsavfall, elavfall, farligt avfall etc.
+&lt;i&gt;Källa: Avfall Sverige + SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ladugard">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad för förvaring av kor, annan boskap, andra djur och foder, t.ex. stall.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="silo">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad med tornliknande behållare för lagring av t.ex. spannmål eller ensilage.
+&lt;i&gt;Källa: Terminologicentrum TNC Plan och Byggtermer 1994&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="växthus">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som används för odling i större skala, t.ex. växthus för tomatodling, växtodling etc.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="maskinhall">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad inom lantbruk och skogsbruk som används för näringens maskiner.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="carport">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Öppet garage för personbilar.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="garage">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad eller del av byggnad avsedd för parkering av fordon.
+&lt;i&gt;Källa: Terminologicentrum TNC Plan och Byggtermer 1994 + SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="skärmtak">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Tak, komplement till en byggnad, över t.ex. en dörr, en entré, en lastkaj, ett järnvägsspår, en perrong eller liknande. Skärmtaket kan vara över en uteplats vid en bostad eller över en altan, balkong eller entré.
+&lt;i&gt;Källa: PBL 2010:900 + SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="uterum">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Enklare sluten byggnad med minst en inglasad vägg. Ett uterum kan byggas som en tillbyggnad på en befintlig byggnad eller som en fristående byggnad.
+Anm. Uterum som inte ingår i bostadsarea
+
+&lt;i&gt;Källa: SGP Byggnad + Wikipedia&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="förrad">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som används som förvaringsplats för material, anläggningsdelar eller utrustning. 
+&lt;i&gt;Källa: Terminologicentrum TNC Plan och Byggtermer 1994&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="förbindelsegång">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Form av korridor som förbinder två byggnader med varandra.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fyrbyggnad">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad med fyranordning som personer kan vistas i.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;
+&lt;i&gt;
+&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="jordkällare">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+En fristående källarbyggnad som är helt eller delvis under mark.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="torn">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+En hög byggnad eller byggnadsdel med tak, med en relativt liten yta, vars höjd är väsentlig för dess funktion. Som fristående byggnad används det numera ofta för utsikt och/eller kommunikation. T.ex. utsiktstorn.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="vindskydd">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+En enklare byggnad för friluftslivet som syftar till att ge vandrare tak över huvudet och skydd mot vädret. Ofta tre väggar med tak.
+&lt;i&gt;Källa: SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kolonistuga">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad på kolonilotten, t.ex. stuga, friggebod eller redskapsskjul/förråd.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="väderkvarn">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Kvarnbyggnad som drivs med vindkraft.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_ByggnadAndamalDetaljOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_ByggnadAndamalOversiktTypType">
+    <annotation>
+      <documentation>-- Definition --
+anger vilket ändamål byggnaden eller byggnadsdelen används till
+
+-- Beskrivning --
+Kodlistan BY_ByggnadsAndamalTyp är en hierarkisk kodlista som anger giltiga värden för typer av ändamål. Kodlistan är indelad i två nivåer.</documentation>
+    </annotation>
+    <union memberTypes="byade:BY_ByggnadAndamalOversiktTypEnumerationType byade:BY_ByggnadAndamalOversiktTypOtherType"/>
+  </simpleType>
+  <simpleType name="BY_ByggnadAndamalOversiktTypEnumerationType">
+    <annotation>
+      <documentation>-- Definition --
+anger vilket ändamål byggnaden eller byggnadsdelen används till
+
+-- Beskrivning --
+Kodlistan BY_ByggnadsAndamalTyp är en hierarkisk kodlista som anger giltiga värden för typer av ändamål. Kodlistan är indelad i två nivåer.</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="bostad">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som till övervägande del innehåller bostäder för permanent- eller fritidsboende.
+&lt;i&gt;Källa: SIS-TS 637010:2014 + SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="industri">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som är inrättad för industriell verksamhet/tillverkning.
+&lt;i&gt;Källa: Fastighetstaxeringslagen 1979:1152 + SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="verksamhet">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som till övervägande del används för rörelse, t.ex. hotell, kontor, handel, kiosk, affär, lokal, lager, vandrarhem, restaurang, parkeringshus, djursjukhus, försvarsverksamhet 
+&lt;i&gt;Källa: SGP Byggnad &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="samhallsfunktion">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som till övervägande del innehåller verksamhet som nyttjas av medborgare i samhällslivet.
+&lt;i&gt;Källa: SGP Byggnad&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ekonomibyggnad">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som till övervägande del är inrättad för jordbruk, skogsbruk eller därmed jämförbar näring. 
+&lt;i&gt;Källa: SGP Byggnad + Terminologicentrum TNC Plan- och Byggtermer 1994&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="komplementbyggnad">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Fristående byggnad som tillhör bostadshuset. T.ex. friggebod, gäststuga, uthus, Attefallshus&lt;sup&gt;1&lt;/sup&gt;, växthus, lusthus.
+&lt;i&gt;Källa: PBL 2010:900, SIS-TS 637010:2014, SGP-Byggnad &lt;/i&gt;
+&amp;nbsp;
+&lt;ol&gt;
+	&lt;li&gt;&lt;b&gt;Anm.&lt;/b&gt;&lt;/li&gt;
+&lt;/ol&gt;
+Bygglovsbefriad byggnad som uppförs i bostadshusets omedelbara närhet med en total byggnadsarea på max 25 kvm. Byggnaden kan användas som en självständig bostad (komplementbostadshus) eller som t.ex. förråd, gäststuga eller garage (komplementbyggnad).
+&lt;i&gt;Källa: Boverket 2015&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="övrig byggnad">
+        <annotation>
+          <documentation>-- Definition --
+
+-- Beskrivning --
+Byggnad som används som t.ex. sjöbod, föreningsstuga, regnskydd, offentlig toalett.
+&lt;i&gt;Källa: SGP Byggnad  &lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_ByggnadAndamalOversiktTypOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <element name="BY_ByggnadAnmarkning" substitutionGroup="gml:AbstractObject" type="byade:BY_ByggnadAnmarkningType">
+    <annotation>
+      <documentation>-- Definition --
+ytterligare upplysning på byggnad
+
+-- Beskrivning --
+Kodlistan BY ByggnadAnmarkningTyp anger giltiga värden för typer av anmärkning.</documentation>
+    </annotation>
+  </element>
+  <complexType name="BY_ByggnadAnmarkningType">
+    <sequence>
+      <element name="anmarkningTyp" type="byade:BY_ByggnadAnmarkningTypType">
+        <annotation>
+          <documentation>-- Definition --</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="anmarkningText" type="string">
+        <annotation>
+          <documentation>-- Definition --</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="BY_ByggnadAnmarkningPropertyType">
+    <sequence>
+      <element ref="byade:BY_ByggnadAnmarkning"/>
+    </sequence>
+  </complexType>
+  <simpleType name="BY_ByggnadAnmarkningTypType">
+    <annotation>
+      <documentation>-- Definition --
+ytterligare upplysning på byggnad</documentation>
+    </annotation>
+    <union memberTypes="byade:BY_ByggnadAnmarkningTypEnumerationType byade:BY_ByggnadAnmarkningTypOtherType"/>
+  </simpleType>
+  <simpleType name="BY_ByggnadAnmarkningTypEnumerationType">
+    <annotation>
+      <documentation>-- Definition --
+ytterligare upplysning på byggnad</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="belägen pa oidentifierat område">
+        <annotation>
+          <documentation>-- Definition --
+byggnaden är belägen på ett fastighetsområde som inte är utrett
+&lt;i&gt;Källa: Lantmäteriet, Svensk geoprocess&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="forskningsstation">
+        <annotation>
+          <documentation>-- Definition --
+station där forskning bedrivs
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="hembygdsgård">
+        <annotation>
+          <documentation>-- Definition --
+en äldre gård eller samling byggnader, som i de flesta fall övertagits av ortens hembygdsförening och sköts av densamma
+&lt;i&gt;Källa: Lantmäteriet, Specifikation GGD&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="naturum">
+        <annotation>
+          <documentation>-- Definition --
+en typ av informationscentrum där besökaren får information om det lokala områdets geologi, flora, fauna och kulturhistoria.
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD&lt;/i&gt;
+&lt;i&gt;
+&lt;/i&gt;&lt;i&gt;-- Beskrivning --&lt;/i&gt;
+Naturum fungerar som en port till naturen. I ett naturum får du veta mer om de djur, växter, geologi och kulturhistoria som format det område du befinner dig. Själva byggnaden samspelar ofta med naturen omkring och verksamheten ger alla en möjlighet att lära sig mer om natur och miljö.
+
+&lt;i&gt;Beskrivning:&lt;/i&gt;
+Naturvårdsverket äger rätten till namnet Naturum. De drivs av en länsstyrelse, kommen eller en stiftelse
+&lt;i&gt;
+&lt;/i&gt;&lt;i&gt;Källa: Naturvårdsverket&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_ByggnadAnmarkningTypOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_ByggnadKaraktarTypType">
+    <annotation>
+      <documentation>-- Definition --
+byggnad som har en till utseendet speciell karaktär</documentation>
+    </annotation>
+    <union memberTypes="byade:BY_ByggnadKaraktarTypEnumerationType byade:BY_ByggnadKaraktarTypOtherType"/>
+  </simpleType>
+  <simpleType name="BY_ByggnadKaraktarTypEnumerationType">
+    <annotation>
+      <documentation>-- Definition --
+byggnad som har en till utseendet speciell karaktär</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="enslig stuga i fjällen">
+        <annotation>
+          <documentation>-- Definition --
+ensligt belägen stuga i fjällregionen som i regel är låst och ej avsedd för turister
+-- Exempel --
+bevakningsstugor, personalstugor, jakt- och fiskestugor</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fjällstation">
+        <annotation>
+          <documentation>-- Definition --
+anläggning med service, aktiviteter och övernattning för turister under högsäsong 
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD&lt;/i&gt;
+
+-- Beskrivning --
+Under lågsäsong finns tillgång till öppet nödutrymme. Här ingår även hotell och pensionat i fjällregionen.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fyrbyggnad">
+        <annotation>
+          <documentation>-- Definition --
+på bestämd plats uppförd eller förankrad fyr för ledning av sjötrafik
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="herrgård">
+        <annotation>
+          <documentation>-- Definition --
+&lt;ul&gt;
+	&lt;li&gt;bostadsbyggnad till gods där byggnaden är till byggnadssätt och läge framträdande&lt;/li&gt;
+	&lt;li&gt;bostadsbyggnad vars funktion varit mangårdsbyggnad till säteri eller gods, men som numera har annan användning&lt;/li&gt;
+	&lt;li&gt;större bostadsbyggnad som uppförts som privatbostad för ägaren och som tillsammans med omgivande tomt har herrgårdsliknande stil&lt;/li&gt;
+&lt;/ul&gt;
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="klockstapel">
+        <annotation>
+          <documentation>-- Definition --
+&lt;font color="#3f3f3f"&gt;b&lt;/font&gt;yggnadskonstruktion uppförd för att uppbära klockor, ofta i anslutning till kyrka
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kyrka">
+        <annotation>
+          <documentation>-- Definition --
+kyrkobyggnad med karaktären traditionell svensk kyrka</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kåta">
+        <annotation>
+          <documentation>-- Definition --
+enklare konisk eller kupolformig byggnad i fjällregionen avsedd för vistelse 
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="moské">
+        <annotation>
+          <documentation>-- Definition --
+en muslimsk helgedom, avsedd för bön, predikan och undervisning
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="raststuga">
+        <annotation>
+          <documentation>-- Definition --
+stuga som kan användas för skydd eller vid rast och alltid är öppen
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="religiös byggnad">
+        <annotation>
+          <documentation>-- Definition --
+används för religiös gemenskap och har särskilda karaktäristiska kännetecken
+&lt;i&gt;Källa: Lantmäteriet, Modern Topografisk Produktion&lt;/i&gt;
+&lt;i&gt;
+&lt;/i&gt;-- Beskrivning --
+Kan t.ex. vara en frikyrka</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="slott">
+        <annotation>
+          <documentation>-- Definition --
+monumental historisk byggnad som är eller har varit ägd av kunglig eller adlig person
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="synagoga">
+        <annotation>
+          <documentation>-- Definition --
+judisk samlingslokal avsedd för gudstjänst, tillbedjan och religiösa studier
+
+-- Beskrivning --
+På traditionella synagogor ses ofta tolv fönster, som ska symbolisera de tolv judiska stammarna.
+&lt;i&gt;Källa: Wikipedia&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tempel">
+        <annotation>
+          <documentation>-- Definition --
+avsedd för religionsutövning och som har särskilda karaktäristiska kännetecken
+&lt;i&gt;Källa: Lantmäteriet, Modern Topografisk Information&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="torn">
+        <annotation>
+          <documentation>-- Definition --
+&lt;font color="#3f3f3f"&gt;hög, upprättstående, byggnadskonstruktion uppförd på relativt liten markyta eller på annan byggnad.&lt;/font&gt;
+
+&lt;font color="#3f3f3f"&gt;-- Beskrivning --&lt;/font&gt;
+Avsedd att innesluta eller uppbära ett betydande utrymme (jfr mast). 
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="turiststuga/övernattningsstuga">
+        <annotation>
+          <documentation>-- Definition --
+stuga som finns i anslutning till det statliga ledsystemet och avsett att användas vid övernattning
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD &lt;/i&gt;
+&lt;i&gt;
+&lt;/i&gt;-- Beskrivning --
+Här finns alltid ett öppet nödutrymme. Många turiststugor efter det statliga ledsystemet har hjälptelefon.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="vindkraftverk">
+        <annotation>
+          <documentation>-- Definition --
+torn eller mast med påmonterad kraftomvandlande anordning avsedd för kommersiell utvinning av kraft ur vinden (d.v.s inte husbehovskraftverk, väderkvarn m.m.)
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD &lt;/i&gt;
+&lt;i&gt;
+&lt;/i&gt;kraftverk för omvandling av vindenergi till elektisk energi
+&lt;i&gt;Källa: TNC, Terminologicentrum, Energiordlista&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="väderkvarn">
+        <annotation>
+          <documentation>-- Definition --
+byggnad som uppförts för att mala säd med hjälp av vindkraft  
+&lt;i&gt;Källa: Lantmäteriet, specifikation GGD&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_ByggnadKaraktarTypOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_ByggnadStatusTypType">
+    <annotation>
+      <documentation>-- Definition --
+aktuell status för byggnad</documentation>
+    </annotation>
+    <union memberTypes="byade:BY_ByggnadStatusTypEnumerationType byade:BY_ByggnadStatusTypOtherType"/>
+  </simpleType>
+  <simpleType name="BY_ByggnadStatusTypEnumerationType">
+    <annotation>
+      <documentation>-- Definition --
+aktuell status för byggnad</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="planerad">
+        <annotation>
+          <documentation>-- Definition --
+under uppförande
+
+-- Beskrivning --
+Godkänt bygglov finns, byggnaden planeras att uppföras i närtid eller på längre sikt.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gällande">
+        <annotation>
+          <documentation>-- Definition --
+färdigställd och uppförd
+
+-- Beskrivning --
+Byggnaden är uppförd och slutbesked har beslutats.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="avregistrerad">
+        <annotation>
+          <documentation>-- Definition --
+inte längre gällande/levande.
+
+-- Beskrivning --
+Byggnaden har t.ex. rivits eller brunnit ned.</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_ByggnadStatusTypOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_ByggnadTillbehorTypType">
+    <annotation>
+      <documentation>-- Definition --
+typ av konstruktion, generellt liten, som är ihopbyggd med en byggnad
+
+-- Exempel --
+balkong, mast, skorsten, trappa
+
+.</documentation>
+    </annotation>
+    <union memberTypes="byade:BY_ByggnadTillbehorTypEnumerationType byade:BY_ByggnadTillbehorTypOtherType"/>
+  </simpleType>
+  <simpleType name="BY_ByggnadTillbehorTypEnumerationType">
+    <annotation>
+      <documentation>-- Definition --
+typ av konstruktion, generellt liten, som är ihopbyggd med en byggnad
+
+-- Exempel --
+balkong, mast, skorsten, trappa
+
+.</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="altan">
+        <annotation>
+          <documentation>-- Definition --
+iordningsställd begränsad yta i anslutning till bostaden
+&lt;i&gt;Källa: TNC, Terminologicenter&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="balkong">
+        <annotation>
+          <documentation>-- Definition --
+med skyddsräcke försedd platta som ofta skjuter ut från väggliv
+&lt;i&gt;Källa: TNC, Terminlogicenter&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="brandvägg">
+        <annotation>
+          <documentation>-- Definition --
+vägg med särskilt utförande som anordnas till skydd mot brandspridning mellan byggnader eller delar av en större byggnad
+
+&lt;i&gt;Källa: Rikstermbanken, TNC, Terminologicentrum, Plan och byggtermer &lt;/i&gt;
+
+&lt;i&gt;Anmärkning:&lt;/i&gt; Termen Brandvägg ersätter de tidigare använda termerna brandmur och brandsäker mur.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="lastbrygga">
+        <annotation>
+          <documentation>-- Definition --
+anordning i form av ett stationärt eller flyttbart plan avsett att vid lastning och lossning utjämna nivåskillnad mellan lastkaj och fordons lastutrymme
+&lt;i&gt;Källa: TNC, Terminologicentrum&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mast">
+        <annotation>
+          <documentation>-- Definition --
+vertikal stående konstruktion på byggnad</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="skorsten">
+        <annotation>
+          <documentation>-- Definition --
+vertikal rörformad konstruktion på byggnad för att leda bort rökgaser
+&lt;i&gt;
+&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="takfönster">
+        <annotation>
+          <documentation>-- Definition --
+vanligen i form av glasat ramverk, som täpper till öppning i vägg eller tak och som har till väsentlig funktion att släppa in dagsljus
+&lt;i&gt;Källa: TNC, Terminologicentrum, Plan och Byggtermer&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="takkupa">
+        <annotation>
+          <documentation>-- Definition --
+utskjutande parti av yttertak utbyggt i takfall och försett med (fönster)öppning framtill
+&lt;i&gt;Källa: TNC, Terminologicentrum, Träbyggnadsordlista&lt;/i&gt;</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="trappa">
+        <annotation>
+          <documentation>-- Definition --
+förbindelseled mellan olika nivåer bestående av trapplopp och eventuella vilplan
+&lt;i&gt;Källa: TNC, Terminologicentrum, Plan- och Byggtermer&lt;/i&gt;
+
+-- Beskrivning --</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_ByggnadTillbehorTypOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <element name="BY_CoClass" substitutionGroup="gml:AbstractObject" type="byade:BY_CoClassType"/>
+  <complexType name="BY_CoClassType">
+    <sequence>
+      <element name="coClassKod" type="string">
+        <annotation>
+          <documentation>-- Definition --
+typ av anmärkning</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="coClassId" type="string">
+        <annotation>
+          <documentation>-- Definition --
+text som hör till anmärkningstypen belägenPåOidentifieratOmråde</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="BY_CoClassPropertyType">
+    <sequence>
+      <element ref="byade:BY_CoClass"/>
+    </sequence>
+  </complexType>
+  <element name="BY_FysiskByggnad" substitutionGroup="gml:AbstractFeature" type="byade:BY_FysiskByggnadType">
+    <annotation>
+      <documentation>-- Name --
+BY_FysiskByggnad
+
+-- Definition --</documentation>
+    </annotation>
+  </element>
+  <complexType name="BY_FysiskByggnadType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element minOccurs="0" name="conditionOfConstruction" type="con:ConditionOfConstructionValueType">
+            <annotation>
+              <documentation>[INSPIRE] Status of the construction.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="dateOfConstruction" type="date">
+            <annotation>
+              <documentation>Date of completion of a construction.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="dateOfRenovation" type="date">
+            <annotation>
+              <documentation>Date of renovation of a construction.</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="dateOfDemolition" type="date">
+            <annotation>
+              <documentation>Date of demolition of a construction.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="elevation" type="con:ElevationPropertyType">
+            <annotation>
+              <documentation>[INSPIRE] Vertically-constrained dimensional property consisting of an absolute measure referenced to a well-defined surface which is commonly taken as origin (geoïd, water level, etc.).</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="heightAboveGround" type="con:HeightAboveGroundPropertyType">
+            <annotation>
+              <documentation>[INSPIRE] Height above ground.</documentation>
+            </annotation>
+          </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="externReferensFysiskBy" type="core:ExternalReferencePropertyType">
+            <annotation>
+              <documentation>-- Name --
+coClass
+
+-- Definition --</documentation>
+            </annotation>
+          </element>
+          <element minOccurs="0" name="coClassFysiskBy" type="byade:BY_CoClassPropertyType">
+            <annotation>
+              <documentation>-- Name --
+coClass
+
+-- Definition --</documentation>
+            </annotation>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="BY_FysiskByggnadPropertyType">
+    <sequence minOccurs="0">
+      <element ref="byade:BY_FysiskByggnad"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+    <attributeGroup ref="gml:OwnershipAttributeGroup"/>
+  </complexType>
+  <element name="BY_GeometriMetadata" substitutionGroup="gml:AbstractObject" type="byade:BY_GeometriMetadataType"/>
+  <complexType name="BY_GeometriMetadataType">
+    <sequence>
+      <element minOccurs="0" name="lagesosakerhetHojd" type="double">
+        <annotation>
+          <documentation>-- Definition --
+typ av anmärkning</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="lagesosakerhetPlan" type="double">
+        <annotation>
+          <documentation>-- Definition --
+text som hör till anmärkningstypen belägenPåOidentifieratOmråde</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="matmetodPlan" type="byade:BY_InsamlingMetodTypType"/>
+      <element minOccurs="0" name="matmetodHojd" type="byade:BY_InsamlingMetodTypType"/>
+      <element minOccurs="0" name="geometriskUpplosning" type="double"/>
+      <element minOccurs="0" name="flyghojd" type="integer"/>
+      <element minOccurs="0" name="skalaUnderlag" type="integer"/>
+      <element minOccurs="0" name="tidpunktMatning" type="dateTime"/>
+      <element minOccurs="0" name="osakertLage" type="boolean"/>
+      <element minOccurs="0" name="osakertLageAnledning" type="string"/>
+      <element minOccurs="0" name="ansvarigOrgansiation" type="string"/>
+      <element minOccurs="0" name="utforandeOrganisation" type="string"/>
+      <element name="HMK-Standardniva" type="byade:BY_HMKStandardnivaTypType"/>
+      <element minOccurs="0" name="foljerMatanvisning" type="boolean"/>
+      <element minOccurs="0" name="aktualitet" type="dateTime"/>
+      <element minOccurs="0" name="koordinatsystemPlan" type="byade:BY_KoordinatsystemPlanTypType"/>
+      <element minOccurs="0" name="koordinatsystemHojd" type="byade:BY_KoordinatsystemHojdTypType"/>
+      <element minOccurs="0" name="dimension" type="double"/>
+      <element minOccurs="0" name="planLageTyp" type="byade:BY_PlanLageTypType"/>
+    </sequence>
+  </complexType>
+  <complexType name="BY_GeometriMetadataPropertyType">
+    <sequence>
+      <element ref="byade:BY_GeometriMetadata"/>
+    </sequence>
+  </complexType>
+  <simpleType name="BY_HMKStandardnivaTypType">
+    <union memberTypes="byade:BY_HMKStandardnivaTypEnumerationType byade:BY_HMKStandardnivaTypOtherType"/>
+  </simpleType>
+  <simpleType name="BY_HMKStandardnivaTypEnumerationType">
+    <restriction base="string">
+      <enumeration value="2"/>
+      <enumeration value="1">
+        <annotation>
+          <documentation>-- Definition --
+färdigställd och uppförd
+
+-- Beskrivning --
+Byggnaden är uppförd och slutbesked har beslutats.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="0">
+        <annotation>
+          <documentation>-- Definition --
+inte längre gällande/levande.
+
+-- Beskrivning --
+Byggnaden har t.ex. rivits eller brunnit ned.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="3"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_HMKStandardnivaTypOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_HojdLageTypType">
+    <annotation>
+      <documentation>-- Definition --
+lista med möjliga värden för geometrins höjdläge
+
+-- Beskrivning --
+Avser höjdlägen som beskriver höjd som attribut eller höjdkoordinat.</documentation>
+    </annotation>
+    <union memberTypes="byade:BY_HojdLageTypEnumerationType byade:BY_HojdLageTypOtherType"/>
+  </simpleType>
+  <simpleType name="BY_HojdLageTypEnumerationType">
+    <annotation>
+      <documentation>-- Definition --
+lista med möjliga värden för geometrins höjdläge
+
+-- Beskrivning --
+Avser höjdlägen som beskriver höjd som attribut eller höjdkoordinat.</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="byggnadens högsta punkt">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="takets högsta punkt (nock)">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="takkant, generell">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="takkant, lägsta">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="takkant, högsta">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="lutande takkontur">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="takfot, generell">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="takfot, lägsta">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="takfot, högsta">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="generell takhöjd">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="lägsta våning ovan mark vid överhäng">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="entrénivå">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="färdigt golv">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sockelhöjd">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="husgrund">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="markens medelhöjd">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="markhöjd, lägsta">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="markhöjd, högsta">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="byggnadens lägsta punkt">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fiktivt höjdläge under marknivå">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="illustrativt läge">
+        <annotation>
+          <documentation>-- Definition --
+saknar inmätt läge
+
+-- Beskrivning --
+Läget redovisas med schablongeometri.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ospecificerat läge"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_HojdLageTypOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_InsamlingMetodTypType">
+    <union memberTypes="byade:BY_InsamlingMetodTypEnumerationType byade:BY_InsamlingMetodTypOtherType"/>
+  </simpleType>
+  <simpleType name="BY_InsamlingMetodTypEnumerationType">
+    <restriction base="string">
+      <enumeration value="fotogrammetrisk detaljmätning (stereokartering)">
+        <annotation>
+          <documentation>-- Definition --
+under uppförande
+
+-- Beskrivning --
+Godkänt bygglov finns, byggnaden planeras att uppföras i närtid eller på längre sikt.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fotogrammetrisk detaljmätning (ortofoto + höjdmodell)"/>
+      <enumeration value="fotogrammetrisk detaljmätning (ortofoto)">
+        <annotation>
+          <documentation>-- Definition --
+inte längre gällande/levande.
+
+-- Beskrivning --
+Byggnaden har t.ex. rivits eller brunnit ned.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="flygburen laserskanning"/>
+      <enumeration value="marklaserskanning"/>
+      <enumeration value="geodetisk mätning, GNSS"/>
+      <enumeration value="fordonsburen laserskanning"/>
+      <enumeration value="geodetisk mätning, DGNSS"/>
+      <enumeration value="geodetisk mätning, totalstation"/>
+      <enumeration value="geodetisk mätning, ospecificerad"/>
+      <enumeration value="geodetisk mätning, avvagning"/>
+      <enumeration value="digitalisering analog karta"/>
+      <enumeration value="konstruerad annan"/>
+      <enumeration value="konstruerad BIM"/>
+      <enumeration value="annan metod"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_InsamlingMetodTypOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_KoordinatsystemHojdTypType">
+    <annotation>
+      <documentation>-- Definition --
+lista med möjliga värden för geometrins planläge</documentation>
+    </annotation>
+    <union memberTypes="byade:BY_KoordinatsystemHojdTypEnumerationType byade:BY_KoordinatsystemHojdTypOtherType"/>
+  </simpleType>
+  <simpleType name="BY_KoordinatsystemHojdTypEnumerationType">
+    <annotation>
+      <documentation>-- Definition --
+lista med möjliga värden för geometrins planläge</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="RH 2000">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_KoordinatsystemHojdTypOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_KoordinatsystemPlanTypType">
+    <union memberTypes="byade:BY_KoordinatsystemPlanTypEnumerationType byade:BY_KoordinatsystemPlanTypOtherType"/>
+  </simpleType>
+  <simpleType name="BY_KoordinatsystemPlanTypEnumerationType">
+    <restriction base="string">
+      <enumeration value="EPSG:3012 = SWEREF 99 14 15">
+        <annotation>
+          <documentation>-- Definition --
+under uppförande
+
+-- Beskrivning --
+Godkänt bygglov finns, byggnaden planeras att uppföras i närtid eller på längre sikt.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="EPSG:3010 = SWEREF 99 16 30"/>
+      <enumeration value="EPSG:3011 = SWEREF 99 18 00">
+        <annotation>
+          <documentation>-- Definition --
+inte längre gällande/levande.
+
+-- Beskrivning --
+Byggnaden har t.ex. rivits eller brunnit ned.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="EPSG:3008 = SWEREF 99 13 30"/>
+      <enumeration value="EPSG:4976 = SWEREF 99 geocentrisk"/>
+      <enumeration value="EPSG:3015 = SWEREF 99 18 45"/>
+      <enumeration value="EPSG:3009 = SWEREF 99 15 00"/>
+      <enumeration value="EPSG:3014 = SWEREF 99 17 15"/>
+      <enumeration value="EPSG:3017 = SWEREF 99 21 45"/>
+      <enumeration value="EPSG:3016 = SWEREF 99 20 15"/>
+      <enumeration value="EPSG:3013 = SWEREF 99 15 45"/>
+      <enumeration value="EPSG:3007 = SWEREF 99 12 00"/>
+      <enumeration value="EPSG:3018 = SWEREF 99 23 15"/>
+      <enumeration value="EPSG:4619 = SWEREF 99 geografisk"/>
+      <enumeration value="EPSG:3006 = SWEREF 99 TM"/>
+      <enumeration value="EPSG:4977 = SWEREF 99 geodetisk"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_KoordinatsystemPlanTypOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <element name="BY_Namn" substitutionGroup="gml:AbstractObject" type="byade:BY_NamnType"/>
+  <complexType name="BY_NamnType">
+    <sequence>
+      <element name="externalReference" type="core:ExternalReferencePropertyType">
+        <annotation>
+          <documentation>-- Definition --
+typ av anmärkning</documentation>
+        </annotation>
+      </element>
+      <element minOccurs="0" name="ansvarigBeslutsfattare" type="byade:BY_AnsvarigBeslutsfattareType">
+        <annotation>
+          <documentation>-- Definition --
+text som hör till anmärkningstypen belägenPåOidentifieratOmråde</documentation>
+        </annotation>
+      </element>
+      <element name="namn" type="string"/>
+      <element name="namnStatus" type="byade:BY_NamnStatusType"/>
+      <element name="sprak" type="byade:BY_SprakType"/>
+    </sequence>
+  </complexType>
+  <complexType name="BY_NamnPropertyType">
+    <sequence>
+      <element ref="byade:BY_Namn"/>
+    </sequence>
+  </complexType>
+  <simpleType name="BY_NamnStatusType">
+    <union memberTypes="byade:BY_NamnStatusEnumerationType byade:BY_NamnStatusOtherType"/>
+  </simpleType>
+  <simpleType name="BY_NamnStatusEnumerationType">
+    <restriction base="string">
+      <enumeration value="övrigt namn"/>
+      <enumeration value="godkänt namn">
+        <annotation>
+          <documentation>-- Definition --
+färdigställd och uppförd
+
+-- Beskrivning --
+Byggnaden är uppförd och slutbesked har beslutats.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="föreslaget namn">
+        <annotation>
+          <documentation>-- Definition --
+inte längre gällande/levande.
+
+-- Beskrivning --
+Byggnaden har t.ex. rivits eller brunnit ned.</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_NamnStatusOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_PlanLageTypType">
+    <annotation>
+      <documentation>-- Definition --
+lista med möjliga värden för geometrins planläge</documentation>
+    </annotation>
+    <union memberTypes="byade:BY_PlanLageTypEnumerationType byade:BY_PlanLageTypOtherType"/>
+  </simpleType>
+  <simpleType name="BY_PlanLageTypEnumerationType">
+    <annotation>
+      <documentation>-- Definition --
+lista med möjliga värden för geometrins planläge</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="fasad">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="takkant">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="husgrund">
+        <annotation>
+          <documentation>-- Definition --
+Se Mätningsanvisningar.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="illustrativt läge">
+        <annotation>
+          <documentation>-- Definition --
+saknar inmätt läge
+
+-- Beskrivning --
+Läget redovisas med schablongeometri.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ospecificerat läge">
+        <annotation>
+          <documentation>-- Beskrivning --</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_PlanLageTypOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_SprakType">
+    <union memberTypes="byade:BY_SprakEnumerationType byade:BY_SprakOtherType"/>
+  </simpleType>
+  <simpleType name="BY_SprakEnumerationType">
+    <restriction base="string">
+      <enumeration value="sydsamiska"/>
+      <enumeration value="nordsamiska"/>
+      <enumeration value="svenska"/>
+      <enumeration value="umesamiska"/>
+      <enumeration value="lulesamiska"/>
+      <enumeration value="meänkieli"/>
+      <enumeration value="finska"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_SprakOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_TakTypType">
+    <annotation>
+      <documentation>-- Definition --
+takets form</documentation>
+    </annotation>
+    <union memberTypes="byade:BY_TakTypEnumerationType byade:BY_TakTypOtherType"/>
+  </simpleType>
+  <simpleType name="BY_TakTypEnumerationType">
+    <annotation>
+      <documentation>-- Definition --
+takets form</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="lågt lutande tak"/>
+      <enumeration value="pulpettak"/>
+      <enumeration value="sadeltak"/>
+      <enumeration value="valmat tak"/>
+      <enumeration value="mansardtak"/>
+      <enumeration value="halvvalmat tak"/>
+      <enumeration value="kägeltak"/>
+      <enumeration value="pyramidtak"/>
+      <enumeration value="kupoltak"/>
+      <enumeration value="bågtak"/>
+      <enumeration value="penthustak"/>
+      <enumeration value="sågtandtak"/>
+      <enumeration value="tälttak"/>
+      <enumeration value="dubbelkrökt tak"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="BY_TakTypOtherType">
+    <restriction base="string">
+      <pattern value="other: \w{2,}"/>
+    </restriction>
+  </simpleType>
+  <element name="byggnadNamn" substitutionGroup="bldg:_GenericApplicationPropertyOfBuilding" type="byade:BY_NamnPropertyType">
+    <annotation>
+      <documentation>-- Name --
+byggnadNamn
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="boArea" substitutionGroup="bldg:_GenericApplicationPropertyOfBuilding" type="integer">
+    <annotation>
+      <documentation>-- Name --
+boArea
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="byggnadAnmarkning" substitutionGroup="bldg:_GenericApplicationPropertyOfBuilding" type="byade:BY_ByggnadAnmarkningPropertyType">
+    <annotation>
+      <documentation>-- Name --
+byggnadAnmärkning
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="undantagenFranAdressattning" substitutionGroup="bldg:_GenericApplicationPropertyOfBuilding" type="boolean">
+    <annotation>
+      <documentation>-- Name --
+undantagenFranAdressattning
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="ofriGrund" substitutionGroup="bldg:_GenericApplicationPropertyOfBuilding" type="boolean">
+    <annotation>
+      <documentation>-- Name --
+ofriGrund
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="byggnadKaraktar" substitutionGroup="bldg:_GenericApplicationPropertyOfBuilding" type="byade:BY_ByggnadKaraktarTypType">
+    <annotation>
+      <documentation>-- Name --
+byggnadKaraktar
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="byggnadArea" substitutionGroup="bldg:_GenericApplicationPropertyOfBuilding" type="integer">
+    <annotation>
+      <documentation>-- Name --
+byggnadArea
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="coClassBuilding" substitutionGroup="bldg:_GenericApplicationPropertyOfBuilding" type="byade:BY_CoClassPropertyType">
+    <annotation>
+      <documentation>-- Name --
+coClass
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="byggnadNummer" substitutionGroup="bldg:_GenericApplicationPropertyOfBuilding" type="integer">
+    <annotation>
+      <documentation>-- Name --
+byggnadNummer
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="coClassConstrElement" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingConstructiveElement" type="byade:BY_CoClassPropertyType">
+    <annotation>
+      <documentation>-- Name --
+coClass
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="geometriMetadataConstrElement" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingConstructiveElement" type="byade:BY_GeometriMetadataPropertyType">
+    <annotation>
+      <documentation>-- Name --
+geometriMetadata
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="status" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingInstallation" type="byade:BY_ByggnadStatusTypType">
+    <annotation>
+      <documentation>-- Name --
+status
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="coClassBuildInstall" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingInstallation" type="byade:BY_CoClassPropertyType">
+    <annotation>
+      <documentation>-- Name --
+coClass
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="byggnadstillbehor" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingInstallation" type="byade:BY_ByggnadTillbehorTypType">
+    <annotation>
+      <documentation>-- Name --
+byggnadstillbehor
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="geometriMetadataBuildInstall" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingInstallation" type="byade:BY_GeometriMetadataPropertyType">
+    <annotation>
+      <documentation>-- Name --
+geometriMetadata
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="byggnadNummerDel" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingPart" type="integer">
+    <annotation>
+      <documentation>-- Name --
+byggnadNummerDel
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="boAreaDel" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingPart" type="integer">
+    <annotation>
+      <documentation>-- Name --
+boAreaDel
+
+-- Definition</documentation>
+    </annotation>
+  </element>
+  <element name="heltUnderMark" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingPart" type="boolean">
+    <annotation>
+      <documentation>-- Name --
+heltUnderMark
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="byggnadKaraktarDel" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingPart" type="byade:BY_ByggnadKaraktarTypType">
+    <annotation>
+      <documentation>-- Name --
+byggnadKaraktarDel
+
+-- Definition --</documentation>
+    </annotation>
+  </element>
+  <element name="coClassBuildPart" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingPart" type="byade:BY_CoClassPropertyType">
+    <annotation>
+      <documentation>-- Name --
+coClass
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="takvinkel" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingPart" type="integer">
+    <annotation>
+      <documentation>-- Name --
+takvinkel
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="vind" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingPart" type="boolean">
+    <annotation>
+      <documentation>-- Name --
+vind
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="kallare" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingPart" type="boolean">
+    <annotation>
+      <documentation>-- Name --
+kallare
+
+-- Definition -
+Källarvåning</documentation>
+    </annotation>
+  </element>
+  <element name="geometriMetadataBuildPart" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingPart" type="byade:BY_GeometriMetadataPropertyType">
+    <annotation>
+      <documentation>-- Name --
+geometriMetadata
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="coClassBuildUnit" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingUnit" type="byade:BY_CoClassPropertyType">
+    <annotation>
+      <documentation>-- Name --
+coClass
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="geometriMetadataBuildUnit" substitutionGroup="bldg:_GenericApplicationPropertyOfBuildingUnit" type="byade:BY_GeometriMetadataPropertyType">
+    <annotation>
+      <documentation>-- Name --
+geometriMetadata
+
+-- Definition --</documentation>
+    </annotation>
+  </element>
+  <element name="coClassDoor" substitutionGroup="con:_GenericApplicationPropertyOfDoor" type="byade:BY_CoClassPropertyType">
+    <annotation>
+      <documentation>-- Name --
+coClass
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="geometriMetadataDoor" substitutionGroup="con:_GenericApplicationPropertyOfDoor" type="byade:BY_GeometriMetadataPropertyType">
+    <annotation>
+      <documentation>-- Name --
+geometriMetadata
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="coClassWindow" substitutionGroup="con:_GenericApplicationPropertyOfWindow" type="byade:BY_CoClassPropertyType">
+    <annotation>
+      <documentation>-- Name --
+coClass
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+  <element name="geometriMetadataWindow" substitutionGroup="con:_GenericApplicationPropertyOfWindow" type="byade:BY_GeometriMetadataPropertyType">
+    <annotation>
+      <documentation>-- Name --
+geometriMetadata
+
+-- Definition -</documentation>
+    </annotation>
+  </element>
+</schema>
